@@ -21,6 +21,7 @@ apk add sudo vim htop tmux ranger feh wireguard ip6tables
 visudo
 adduser name wheel
 su name
+cd ~
 mkdir tl dl dx px vx ax mt
 sudo setup-xorg-base
 sudo apk add git make gcc g++ libx11-dev libxft-dev libxinerama-dev ncurses dbus-x11 firefox-esr adwaita-gtk2-theme adwaita-icon-theme ttf-dejavu
