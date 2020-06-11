@@ -59,3 +59,5 @@ mount --bind /sys /mnt/root/sys
 cp /etc/reslov.conf /mnt/root/etc
 chroot /mnt ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
 chroot /mnt hwclock --systohc --utc
+
+## ! GRUB INSTALL SECTION PENDING ! ##
