@@ -15,7 +15,7 @@ read -p 'host: ' hname
 wpa_supplicant -i wlan0 -c wifi.conf -B
 udhcpc -i wlan0
 apk update
-apk add cryptsetup sgdisk lvm2 dmcrypt boot mkdir
+apk add cryptsetup sgdisk lvm2 dmcrypt boot mkdir # yeah... gnu but that {} method
 
 # disk partitioning
 sgdisk -og /dev/sda
