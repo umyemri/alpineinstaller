@@ -15,7 +15,7 @@ read -p 'host: ' hname
 wpa_supplicant -i wlan0 -c wifi.conf -B
 udhcpc -i wlan0
 apk update
-apk add cryptsetup sgdisk lvm2 dmcrypt boot
+apk add cryptsetup sgdisk lvm2 dmcrypt boot mkdir
 
 # disk partitioning
 sgdisk -og /dev/sda
@@ -51,11 +51,11 @@ mount /dev/volume/home /mnt/home
 # alpine installation
 apk add --root=/mnt/ --initdb $(cat /etc/apk/world)
 # add edge repo to /etc/apk/repositories & /mnt/root/etc/apk/repositories
-apk add --root=/mnt/ dhcpcd chrony wireless-tools wpa_supplicant
+apk add --root=/mnt/ chrony wireless-tools wpa_supplicant
 apk add --root=/mnt/ grub mkinitfs e2fsprogs grub-bios grub-efi
 apk add --root=/mnt/ dosfstools exfat-utils ntfs-3g
 apk add --root=/mnt/ sudo vim tmux gotop ncurses ncdu
-apk add --root=/mnt/ linux util-linux man man-pages
+apk add --root=/mnt/ linux util-linux man man-pages mkdir
 mount --bind /dev /mnt/dev
 mount --bind /sys /mnt/sys
 mount --bind /proc /mnt/proc
@@ -72,3 +72,5 @@ chroot /mnt hostname -F /etc/hostname
 # grub installation
 chroot /mnt grub-install /dev/sda1
 chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+echo 'done'
+echo 'some manual configuration of the grub file will be needed.'
