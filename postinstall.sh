@@ -11,8 +11,8 @@ dhcpcd -i wlan0
 read -p 'user: ' uname
 read -sp 'pass: ' upass
 adduser $uname -p $upass
-echo 'myuser ALL=(ALL) NOPASSWD: ALL' >> ./$uname
-mv ./myuser /etc/sudoers.d/
+echo '$uname ALL=(ALL) NOPASSWD: ALL' >> ./$uname
+mv ./$uname /etc/sudoers.d/
 su $uname
 cd ~
 
