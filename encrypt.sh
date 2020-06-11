@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# install alpine on a laptop - with basic encryption
+# install alpine on a laptop
 #
 # usually the setup-alpine is enough to setup a basic partition system. but for
 # my purposes, i want an encrypted volume as a modicum of security. only for
@@ -11,6 +11,7 @@
 # have booted to root and you've generated a wpa_passphrase to wifi.conf
 #
 
+read -p 'host: ' hname
 wpa_supplicant -i wlan0 -c wifi.conf -B
 udhcpc -i wlan0
 apk update
@@ -33,6 +34,7 @@ lvcreate -L 20GB volume -n root
 lvcreate -L 12GB volume -n swap # might be excessive?
 lvcreate -l 100%FREE volume -n home
 modprobe dm_mod
+modprobe dm_crypt
 vgscan
 vgchange -ay
 
@@ -47,17 +49,26 @@ mount /dev/sda1 /mnt/boot
 mount /dev/volume/home /mnt/home
 
 # alpine installation
-apk add --root=/mnt/root --initdb $(cat /etc/apk/world)
+apk add --root=/mnt/ --initdb $(cat /etc/apk/world)
 # add edge repo to /etc/apk/repositories & /mnt/root/etc/apk/repositories
-apk add --root=/mnt/root dhcpcd chrony wireless-tools wpa_supplicant
-apk add --root=/mnt/root grub mkinitfs e2fsprogs grub-bios grub-efi
-apk add --root=/mnt/root dosfstools exfat-utils
-apk add --root=/mnt/root sudo vim tmux gotop ncurses ncdu
-apk add --root=/mnt/root linux
-mount --bind /dev /mnt/root/dev
-mount --bind /sys /mnt/root/sys
-cp /etc/reslov.conf /mnt/root/etc
+apk add --root=/mnt/ dhcpcd chrony wireless-tools wpa_supplicant
+apk add --root=/mnt/ grub mkinitfs e2fsprogs grub-bios grub-efi
+apk add --root=/mnt/ dosfstools exfat-utils ntfs-3g
+apk add --root=/mnt/ sudo vim tmux gotop ncurses ncdu
+apk add --root=/mnt/ linux util-linux man man-pages
+mount --bind /dev /mnt/dev
+mount --bind /sys /mnt/sys
+mount --bind /proc /mnt/proc
+
+# setup names, times, langs
 chroot /mnt ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
 chroot /mnt hwclock --systohc --utc
+echo "en_US.UTF-8 UTF-8  " >> /mnt/etc/locale.gen
+echo "ja_JP.UTF-8 UTF-8  " >> /mnt/etc/locale.gen
+chroot /mnt locale-gen
+echo "$hname" > /mnt/etc/hostname # finally using that variable /phew
+chroot /mnt hostname -F /etc/hostname
 
-## ! GRUB INSTALL SECTION PENDING ! ##
+# grub installation
+chroot /mnt grub-install /dev/sda1
+chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
