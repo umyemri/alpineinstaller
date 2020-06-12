@@ -8,12 +8,13 @@
 # rubberhose attack at that point.
 #
 # this script assumes a usb stick (/dev/sdb) installation on /dev/sda and you
-# have booted to root and you've generated a wpa_passphrase to wifi.conf
+# have booted to root and you're connected to an ethernet port.
 #
 
 read -p 'host: ' hname
-wpa_supplicant -i wlan0 -c wifi.conf -B
-udhcpc -i wlan0
+echo 'auto eth0' > /etc/network/interfaces
+echo 'iface eth0 inet dhcp' >> /etc/network/interfaces
+ifup eth0
 apk update
 apk add cryptsetup sgdisk lvm2 dmcrypt boot mkdir # yeah... gnu but that {} method
 
