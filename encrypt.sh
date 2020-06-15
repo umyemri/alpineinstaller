@@ -12,8 +12,8 @@
 #
 
 # may not be needed if you somehow downloaded this script...
-# echo 'iface eth0 inet dhcp' > /etc/network/interfaces
-# ifup eth0
+#echo 'iface eth0 inet dhcp' > /etc/network/interfaces
+#ifup eth0
 read -p 'host: ' hname
 setup-keymap us us
 setup-hostname $hname
@@ -27,8 +27,9 @@ echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories
 echo 'http://nl.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
 apk update && apk upgrade
 apk add cryptsetup sgdisk lvm2 e2fsprogs dosfstools haveged
-rc-service haveged start
-haveged -n 0 | dd of=/dev/sda
+# potentially a very long step. if you need a secure wipe, uncomment it
+#rc-service haveged start
+#haveged -n 0 | dd of=/dev/sda
 
 # disk partitioning
 sgdisk -og /dev/sda
