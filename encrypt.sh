@@ -65,11 +65,29 @@ mount -t vfat /dev/sda1 /mnt/boot/efi
 
 # alpine installation
 setup-disk -m sys /mnt
+
+# fstab / crypttab / mkinitfs setup
+blkid -s UUID -o value /dev/sda2 > ~/uuid
+cp ~/uuid /mnt/root/
+echo "lvmcrypt    UUID=$(cat ~/uuid)    none    luks" > /mnt/etc/crypttab
+echo "/dev/volume/swap    swap    swap    defaults    0 0" >> /mnt/etc/fstab
+sed -i "s/.../...cryptsetup/" /mnt/etc/mkinitfs/mkinitfs.conf
+mkinitfs -c /mnt/etc/mkinitfs/mkinitfs.conf -b /mnt/ $(ls /mnt/lib/modules/)
+
+# grub on uefi setup
 mount -t proc /proc /mnt/proc
 mount --rbind /dev /mnt/dev
 mount --make-rslave /mnt/dev
 mount --rbind /sys /mnt/sys
+chroot /mnt
+source /etc/profile
+export PS1="(chroot) $PS1"
+apk add grub grub-efi efibootmgr
+apk del syslinux
+echo 'GRUB_ENABLE_CRYPTODISK=y' >> /etc/default/grub
+echo "GRUB_CMDLINE_LINUX_DEFAULT=\"cryptroot=UUID=$(cat ~/uuid) cryptdm=lvmcrypt" >> /etc/default/grub
+grub-install --target=x86_64-efi --efi-directory=/boot/efi
+grub-mkconfig -o /boot/grub/grub.cfg
+exit
 
-echo 'done. some manual configuration of the grub / mkinitfs will be needed before rebooting.'
-echo 'see https://wiki.alpinelinux.org/wiki/LVM_on_LUKS for details'
-echo 'i will add sections to do that automatically in the future.'
+echo 'done.'
