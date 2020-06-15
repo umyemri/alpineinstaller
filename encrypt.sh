@@ -32,7 +32,8 @@ apk add cryptsetup sgdisk lvm2 e2fsprogs dosfstools haveged
 #haveged -n 0 | dd of=/dev/sda
 
 # disk partitioning
-sgdisk -og /dev/sda
+#sgdisk -og /dev/sda # gpt partition erase
+sgdisk -z /dev/sda # zap all gpt records
 sgdisk -n 1:2048:+200MiB -t 1:ef00 /dev/sda
 start_of=$(sgdisk -f /dev/sda)
 end_of=$(sgdisk -E /dev/sda)
