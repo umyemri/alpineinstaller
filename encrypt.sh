@@ -53,15 +53,18 @@ vgscan
 vgchange -ay
 
 # vg file system
-mkfs.fat -F32 /dev/sda1
+#mkfs.fat -F32 /dev/sda1 # grub boot only
+mkfs.ext4 /dev/sda1 # syslinux boot only
 mkfs.ext4 /dev/volume/root
 mkfs.ext4 /dev/volume/boot
 mkswap /dev/volume/swap && swapon /dev/volume/swap
 mount -t ext4 /dev/volume/root /mnt
 mkdir /mnt/boot
-mount -t ext4 /dev/volume/boot /mnt/boot
-mkdir /mnt/boot/efi
-mount -t vfat /dev/sda1 /mnt/boot/efi
+# grub commands
+#mount -t ext4 /dev/volume/boot /mnt/boot
+#mkdir /mnt/boot/efi
+#mount -t vfat /dev/sda1 /mnt/boot/efi
+mount -t ext4 /dev/sda1 /mnt/boot # syslinux boot only
 
 # alpine installation
 setup-disk -m sys /mnt
@@ -88,9 +91,9 @@ mkinitfs -c /mnt/etc/mkinitfs/mkinitfs.conf -b /mnt/ $(ls /mnt/lib/modules/)
 
 # syslinux
 apk add syslinux
-#sed -i "s/.../...default_kernel_opts=\"cryptroot=UUID=$(cat ~/uuid) cryptdm=lvmcrypt\"/" /mnt/etc/update-extlinux.conf 
-#chroot /mnt/ update-extlinux
-#dd bs=440 count=1 conv=notrunc if=/mnt/usr/share/syslinux/mbr.bin of=/dev/sda
+sed -i "s/rootfstype=ext4/rootfstype=ext4 cryptroot=UUID=$(cat ~/uuid) cryptdm=lvmcrypt/" /mnt/etc/update-extlinux.conf 
+chroot /mnt/ update-extlinux
+dd bs=440 count=1 conv=notrunc if=/mnt/usr/share/syslinux/mbr.bin of=/dev/sda
 
 wget https://raw.githubusercontent.com/umyemri/alpineinstaller/master/postinstall.sh -O /mnt/root/postinstall.sh
 
