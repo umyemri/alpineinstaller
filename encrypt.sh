@@ -79,15 +79,12 @@ mount -t proc /proc /mnt/proc
 mount --rbind /dev /mnt/dev
 mount --make-rslave /mnt/dev
 mount --rbind /sys /mnt/sys
-chroot /mnt
-source /etc/profile
-export PS1="(chroot) $PS1"
-apk add grub grub-efi efibootmgr
-apk del syslinux
-echo 'GRUB_ENABLE_CRYPTODISK=y' >> /etc/default/grub
-echo "GRUB_CMDLINE_LINUX_DEFAULT=\"cryptroot=UUID=$(cat /root/uuid) cryptdm=lvmcrypt" >> /etc/default/grub
-grub-install --target=x86_64-efi --efi-directory=/boot/efi
-grub-mkconfig -o /boot/grub/grub.cfg
-exit
+chroot /mnt apk add grub grub-efi efibootmgr
+chroot /mnt apk del syslinux
+echo 'GRUB_ENABLE_CRYPTODISK=y' >> /mnt/etc/default/grub
+echo "GRUB_CMDLINE_LINUX_DEFAULT=\"cryptroot=UUID=$(cat ~/uuid) cryptdm=lvmcrypt" >> /mnt/etc/default/grub
+chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
+chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+wget https://raw.githubusercontent.com/umyemri/alpineinstaller/master/postinstall.sh -O /mnt/root/postinstall.sh
 
 echo 'done.'
