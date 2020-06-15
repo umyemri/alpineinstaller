@@ -70,3 +70,5 @@ mount --make-rslave /mnt/dev
 mount --rbind /sys /mnt/sys
 
 echo 'done. some manual configuration of the grub / mkinitfs will be needed before rebooting.'
+echo 'see https://wiki.alpinelinux.org/wiki/LVM_on_LUKS for details'
+echo 'i will add sections to do that automatically in the future.'
