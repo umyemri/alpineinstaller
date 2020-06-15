@@ -11,12 +11,12 @@
 # have booted to root and you're connected to an ethernet port.
 #
 
+# may not be needed if you somehow downloaded this script...
+# echo 'iface eth0 inet dhcp' > /etc/network/interfaces
+# ifup eth0
 read -p 'host: ' hname
 setup-keymap us us
 setup-hostname $hname
-echo 'auto eth0' > /etc/network/interfaces
-echo 'iface eth0 inet dhcp' >> /etc/network/interfaces
-ifup eth0
 setup-timezone -z US/Pacific
 rc-update add networking boot
 rc-update add urandom boot
