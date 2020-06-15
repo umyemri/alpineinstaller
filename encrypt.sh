@@ -15,7 +15,9 @@ read -p 'host: ' hname
 echo 'auto eth0' > /etc/network/interfaces
 echo 'iface eth0 inet dhcp' >> /etc/network/interfaces
 ifup eth0
-apk update
+echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories
+echo 'http://nl.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
+apk update && apk upgrade
 apk add cryptsetup sgdisk lvm2 dmcrypt boot mkdir # yeah... gnu but that {} method
 
 # disk partitioning
