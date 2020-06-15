@@ -74,17 +74,24 @@ echo "/dev/volume/swap    swap    swap    defaults    0 0" >> /mnt/etc/fstab
 sed -i "s/lvm/lvm cryptsetup/" /mnt/etc/mkinitfs/mkinitfs.conf
 mkinitfs -c /mnt/etc/mkinitfs/mkinitfs.conf -b /mnt/ $(ls /mnt/lib/modules/)
 
-# grub on uefi setup
-mount -t proc /proc /mnt/proc
-mount --rbind /dev /mnt/dev
-mount --make-rslave /mnt/dev
-mount --rbind /sys /mnt/sys
-chroot /mnt apk add grub grub-efi efibootmgr
-chroot /mnt apk del syslinux
-echo 'GRUB_ENABLE_CRYPTODISK=y' >> /mnt/etc/default/grub
-echo "GRUB_CMDLINE_LINUX_DEFAULT=\"cryptroot=UUID=$(cat ~/uuid) cryptdm=lvmcrypt\"" >> /mnt/etc/default/grub
-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+# grub on uefi setup - not working trying syslinux now
+#mount -t proc /proc /mnt/proc
+#mount --rbind /dev /mnt/dev
+#mount --make-rslave /mnt/dev
+#mount --rbind /sys /mnt/sys
+#chroot /mnt apk add grub grub-efi efibootmgr
+#chroot /mnt apk del syslinux
+#echo 'GRUB_ENABLE_CRYPTODISK=y' >> /mnt/etc/default/grub
+#echo "GRUB_CMDLINE_LINUX_DEFAULT=\"cryptroot=UUID=$(cat ~/uuid) cryptdm=lvmcrypt\"" >> /mnt/etc/default/grub
+#chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot/efi
+#chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+
+# syslinux
+apk add syslinux
+#sed -i "s/.../...default_kernel_opts=\"cryptroot=UUID=$(cat ~/uuid) cryptdm=lvmcrypt\"/" /mnt/etc/update-extlinux.conf 
+#chroot /mnt/ update-extlinux
+#dd bs=440 count=1 conv=notrunc if=/mnt/usr/share/syslinux/mbr.bin of=/dev/sda
+
 wget https://raw.githubusercontent.com/umyemri/alpineinstaller/master/postinstall.sh -O /mnt/root/postinstall.sh
 
 echo 'done.'
