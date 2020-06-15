@@ -71,7 +71,7 @@ blkid -s UUID -o value /dev/sda2 > ~/uuid
 cp ~/uuid /mnt/root/
 echo "lvmcrypt    UUID=$(cat ~/uuid)    none    luks" > /mnt/etc/crypttab
 echo "/dev/volume/swap    swap    swap    defaults    0 0" >> /mnt/etc/fstab
-sed -i "s/.../...cryptsetup/" /mnt/etc/mkinitfs/mkinitfs.conf
+sed -i "s/lvm/lvm cryptsetup/" /mnt/etc/mkinitfs/mkinitfs.conf
 mkinitfs -c /mnt/etc/mkinitfs/mkinitfs.conf -b /mnt/ $(ls /mnt/lib/modules/)
 
 # grub on uefi setup
@@ -85,7 +85,7 @@ export PS1="(chroot) $PS1"
 apk add grub grub-efi efibootmgr
 apk del syslinux
 echo 'GRUB_ENABLE_CRYPTODISK=y' >> /etc/default/grub
-echo "GRUB_CMDLINE_LINUX_DEFAULT=\"cryptroot=UUID=$(cat ~/uuid) cryptdm=lvmcrypt" >> /etc/default/grub
+echo "GRUB_CMDLINE_LINUX_DEFAULT=\"cryptroot=UUID=$(cat /root/uuid) cryptdm=lvmcrypt" >> /etc/default/grub
 grub-install --target=x86_64-efi --efi-directory=/boot/efi
 grub-mkconfig -o /boot/grub/grub.cfg
 exit
