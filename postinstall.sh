@@ -10,7 +10,7 @@ wpa_supplicant -i wlan0 -c wifi.conf -B
 dhcpcd -i wlan0
 read -p 'user: ' uname
 read -sp 'pass: ' upass
-adduser $uname -p $upass
+adduser -a -G video,audio,wheel $uname -p $upass
 echo '$uname ALL=(ALL) NOPASSWD: ALL' >> ./$uname
 mv ./$uname /etc/sudoers.d/
 su $uname
@@ -18,6 +18,8 @@ cd ~
 
 # make basic folder structure - these are my preferences
 mkdir tl dl dx px vx ax mt .config
+mkdir px/walls
+wget https://unsplash.it/1920/1080?random -O ~/px/walls/wall.png
 
 # dwm setup from source
 sudo setup-xorg-base
