@@ -7,7 +7,8 @@
 
 # user setup
 wpa_supplicant -i wlan0 -c wifi.conf -B
-dhcpcd -i wlan0
+udhcpcd -i wlan0
+
 read -p 'user: ' uname
 read -sp 'pass: ' upass
 adduser -a -G video,audio,wheel $uname -p $upass
@@ -39,7 +40,7 @@ echo "feh --bg-fill ~/px/walls/wall.png &" > ~/.xinitrc
 echo "exec dwm" >> ~/.xinitrc
 
 # install anything else you want at start up.
-sudo apk add dash ranger w3m feh sxiv p7zip dosfstools exfat-utils wireguard ip6tables libxinerama xrandr python3 py3-pip
+sudo apk add dash ranger w3m feh sxiv p7zip dosfstools exfat-utils wireguard-tools ip6tables libxinerama xrandr python3 py3-pip
 
 # done
 echo 'post install complete.'
