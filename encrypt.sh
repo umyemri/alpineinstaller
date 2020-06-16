@@ -26,19 +26,21 @@ sed -i "s/localhost localhost.localdomain/$hname $hname.localdomain localhost lo
 echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories
 echo 'http://nl.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
 apk update && apk upgrade
-apk add cryptsetup sgdisk lvm2 e2fsprogs dosfstools haveged
+apk add cryptsetup lvm2 e2fsprogs dosfstools parted
 # potentially a very long step. if you need a secure wipe, uncomment it
+#apk add haveged
 #rc-service haveged start
 #haveged -n 0 | dd of=/dev/sda
 
 # disk partitioning
 #sgdisk -og /dev/sda # gpt partition erase
-sgdisk -z /dev/sda # zap all gpt records
-sgdisk -n 1:2048:+200MiB -t 1:ef00 /dev/sda
-start_of=$(sgdisk -f /dev/sda)
-end_of=$(sgdisk -E /dev/sda)
-sgdisk -n 2:$start_of:$end_of -t 2:8e00 /dev/sda
-sgdisk -p /dev/sda
+#sgdisk -z /dev/sda # zap all gpt records
+#sgdisk -n 1:2048:+200MiB -t 1:ef00 /dev/sda
+#start_of=$(sgdisk -f /dev/sda)
+#end_of=$(sgdisk -E /dev/sda)
+#sgdisk -n 2:$start_of:$end_of -t 2:8e00 /dev/sda
+#sgdisk -p /dev/sda
+parted -a optimal
 
 # luks lvm
 cryptsetup -v -c serpent-xts-plain64 -s 512 --hash whirlpool --iter-time 5000 --use-random luksFormat /dev/sda2
