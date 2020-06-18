@@ -19,4 +19,4 @@ I'll need to write up some notes for an encrypted build, but it looks like it's 
 - switch fonts out and work on that kerning
 - vim integration: missing some things... hmmm
 - python3 paths
-- package / service / secuirty audit
+- package / service / security audit
