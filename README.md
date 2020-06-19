@@ -15,7 +15,9 @@ I'll need to write up some notes for an encrypted build, but it looks like it's 
 ## To Do
 - fix postinstall.sh assumptions
 - ibus and japanese input in st: sthttps://bbs.archlinux.org/viewtopic.php?id=244688
-  - fcitx compile? https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package
+  - fcitx compile?
+    - https://wiki.alpinelinux.org/wiki/Creating_an_Alpine_package
+    - https://github.com/fcitx/fcitx
 - texlive setup: no sigil build on alpine, but i've been meaning to learn latex anyway.
 - dwmblocks makefile update: compile issues in alpine
   - https://github.com/LukeSmithxyz/dwmblocks/blob/master/Makefile
