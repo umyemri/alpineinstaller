@@ -1,9 +1,13 @@
-# How to patch suckless tools
+# On suckless tools
 
-## dwm
+## Compiling suckless tools
 
-## st
+## How to patch suckless tools
 
-## dmenu
+### dwm
 
-## dwmstatus
+### st
+
+### dmenu
+
+### dwmstatus
