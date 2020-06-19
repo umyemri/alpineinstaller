@@ -1,6 +1,10 @@
 # Alpine Laptop Installer
 
-Based on the instruction from the wiki: https://wiki.alpinelinux.org/wiki/Setting_up_a_laptop
+Based on the instruction from the wiki: 
+- https://wiki.alpinelinux.org/wiki/Setting_up_a_laptop
+- https://wiki.alpinelinux.org/wiki/LVM_on_LUKS
+
+This is not meant to be a container / server setup in anyway.
 
 ## Impressions
 
@@ -11,6 +15,7 @@ I'll need to write up some notes for an encrypted build, but it looks like it's 
 ## To Do
 - fix postinstall.sh assumptions
 - ibus and japanese input in st: sthttps://bbs.archlinux.org/viewtopic.php?id=244688
+  - fcitx compile?
 - texlive setup: no sigil build on alpine, but i've been meaning to learn latex anyway.
 - dwmblocks makefile update: compile issues in alpine
 - st / dwm alpha patching
