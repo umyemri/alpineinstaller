@@ -40,13 +40,12 @@ apk add cryptsetup lvm2 e2fsprogs dosfstools parted
 #end_of=$(sgdisk -E /dev/sda)
 #sgdisk -n 2:$start_of:$end_of -t 2:8e00 /dev/sda
 #sgdisk -p /dev/sda
-parted -a optimal
-# future scripting project
-#parted --script /device \
-#    mklabel msdos \
-#    mkpart primary 1MiB 100MiB \
-#    mkpart primary 100MiB 200MiB \
-
+parted -s -a optimal -- /dev/sda \
+    mklabel msdos \
+    mkpart primary 1MiB 100MiB \
+    mkpart primary 100MiB 100%
+# if the above doesn't work do it manually:
+#parted -a optimal
 
 # luks lvm
 cryptsetup -v -c serpent-xts-plain64 -s 512 --hash whirlpool --iter-time 5000 --use-random luksFormat /dev/sda2
