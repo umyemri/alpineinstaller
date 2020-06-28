@@ -7,11 +7,11 @@
 # threats that don't have nation state resources. abandon all hope to the
 # rubberhose attack at that point.
 #
-# this script assumes a usb stick (/dev/sdb) installation on /dev/sda and you
+# this script assumes a usb stick (/dev/sdb) installation on /dev/sda, you
 # have booted to root and you're connected to an ethernet port.
 #
 
-# may not be needed if you somehow downloaded this script...
+# my assumption is, you somehow downloaded this script. so...
 #echo 'iface eth0 inet dhcp' > /etc/network/interfaces
 #ifup eth0
 read -p 'host: ' hname
