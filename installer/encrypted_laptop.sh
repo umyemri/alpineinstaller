@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # install alpine on a laptop
 #
