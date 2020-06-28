@@ -27,7 +27,7 @@ echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories
 echo 'http://nl.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
 apk update && apk upgrade
 apk add cryptsetup lvm2 e2fsprogs dosfstools parted
-# potentially a very long step. if you need a secure wipe, uncomment it
+# a very long step. if you need a secure wipe, uncomment it
 #apk add haveged
 #rc-service haveged start
 #haveged -n 0 | dd of=/dev/sda
@@ -79,7 +79,6 @@ setup-disk -m sys /mnt
 
 # fstab / crypttab / mkinitfs setup
 blkid -s UUID -o value /dev/sda2 > ~/uuid
-cp ~/uuid /mnt/root/
 echo "lvmcrypt    UUID=$(cat ~/uuid)    none    luks" > /mnt/etc/crypttab
 echo "/dev/volume/swap    swap    swap    defaults    0 0" >> /mnt/etc/fstab
 sed -i "s/lvm/lvm cryptsetup/" /mnt/etc/mkinitfs/mkinitfs.conf
