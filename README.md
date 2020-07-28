@@ -10,7 +10,7 @@ This is not meant to be a container / server setup in anyway.
 
 So far I did a basic install of Alpine to my Dell XPS 13 9360 with regular setup-alpine. Works just fine. Did a git clone of dwm, compiled it and my laptop functions more or less the same as my Arch build.
 
-I'll need to write up some notes for an encrypted build, but it looks like it's just a combo of cfdisk, chroot and cryptsetup. Some trial and error and I should be good. __Edit:__ Encrypted build complete - see encrypt.sh.
+~~I'll need to write up some notes for an encrypted build, but it looks like it's just a combo of cfdisk, chroot and cryptsetup. Some trial and error and I should be good.~~ __Edit:__ Encrypted build complete - see encrypt.sh.
 
 ## To Do
 - fix postinstall.sh assumptions
