@@ -20,7 +20,6 @@ So far I did a basic install of Alpine to my Dell XPS 13 9360 with regular setup
     - https://github.com/fcitx/fcitx
 - texlive setup: no sigil build on alpine, but i've been meaning to learn latex anyway.
 - dwmblocks makefile update: compile issues in alpine
-  - https://github.com/LukeSmithxyz/dwmblocks/blob/master/Makefile
 - st / dwm alpha patching
 - st font2 patch
 - dash install: no chsh
