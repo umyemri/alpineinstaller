@@ -102,6 +102,6 @@ sed -i "s/rootfstype=ext4/rootfstype=ext4 cryptroot=UUID=$(cat ~/uuid) cryptdm=l
 chroot /mnt/ update-extlinux
 dd bs=440 count=1 conv=notrunc if=/mnt/usr/share/syslinux/mbr.bin of=/dev/sda
 
-wget https://raw.githubusercontent.com/umyemri/alpineinstaller/master/postinstall.sh -O /mnt/root/postinstall.sh
+wget https://raw.githubusercontent.com/umyemri/alpineinstaller/master/installer/postinstall.sh -O /mnt/root/postinstall.sh
 
 echo 'done.'
