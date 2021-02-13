@@ -47,10 +47,10 @@ pvcreate --dataalignment 1m /dev/mapper/crypt
 vgcreate volume /dev/mapper/crypt
 lvcreate -L $(swaps)GB volume -n swap 
 lvcreate -l 100%FREE volume -n root
-modprobe dm_mod
-modprobe dm_crypt
+#modprobe dm_mod
+#modprobe dm_crypt
 #vgscan
-vgchange -ay
+#vgchange -ay
 
 # format all the things
 mkfs.ext4 /dev/sda1
