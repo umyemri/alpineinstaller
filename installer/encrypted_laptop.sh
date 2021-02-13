@@ -44,6 +44,7 @@ parted -s -a optimal -- /dev/sda \
     mklabel msdos \
     mkpart primary 1MiB 100MiB \
     mkpart primary 100MiB 100%
+parted /dev/sda set 1 boot on
 # if the above doesn't work do it manually:
 #parted -a optimal
 
