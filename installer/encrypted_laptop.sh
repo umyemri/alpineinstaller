@@ -16,7 +16,10 @@
 # my assumption is, you somehow downloaded this script. so...
 #echo 'iface eth0 inet dhcp' > /etc/network/interfaces
 #ifup eth0
+
+# starter prompts / repo setup
 read -p 'host: ' hname
+read -p 'swap (_GB): ' swaps
 setup-keymap us us
 setup-hostname $hname
 setup-timezone -z US/Pacific
@@ -36,15 +39,13 @@ parted -s -a optimal -- /dev/sda \
     mkpart primary 1MiB 512MiB \
     mkpart primary 512MiB 100%
 parted /dev/sda set 1 boot on
-# if the above doesn't work do it manually:
-#parted -a optimal
 
 # luks lvm
 cryptsetup -v -c serpent-xts-plain64 -s 512 --hash whirlpool --iter-time 5000 --use-random luksFormat /dev/sda2
 cryptsetup luksOpen /dev/sda2 crypt
 pvcreate --dataalignment 1m /dev/mapper/crypt
 vgcreate volume /dev/mapper/crypt
-lvcreate -L 9GB volume -n swap 
+lvcreate -L $(swaps)GB volume -n swap 
 lvcreate -l 100%FREE volume -n root
 modprobe dm_mod
 modprobe dm_crypt
@@ -76,6 +77,4 @@ sed -i "s/rootfstype=ext4/rootfstype=ext4 cryptroot=UUID=$(cat ~/uuid) cryptdm=l
 chroot /mnt/ update-extlinux
 dd bs=440 count=1 conv=notrunc if=/mnt/usr/share/syslinux/mbr.bin of=/dev/sda
 
-wget https://raw.githubusercontent.com/umyemri/alpineinstaller/master/installer/postinstall.sh -O /mnt/root/postinstall.sh
-
-echo 'done.'
+echo 'done. chroot /mnt passwd when you get a chance. then reboot.'
