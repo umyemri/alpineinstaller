@@ -40,7 +40,7 @@ parted -s -a optimal -- /dev/sda \
     mkpart primary 512MiB 100%
 parted /dev/sda set 1 boot on
 
-# luks lvm
+# encypted volume setup
 cryptsetup -v -c serpent-xts-plain64 -s 512 --hash whirlpool --iter-time 5000 --use-random luksFormat /dev/sda2
 cryptsetup luksOpen /dev/sda2 crypt
 pvcreate --dataalignment 1m /dev/mapper/crypt
@@ -52,7 +52,7 @@ modprobe dm_crypt
 #vgscan
 vgchange -ay
 
-# vg file system
+# format all the things
 mkfs.ext4 /dev/sda1
 mkfs.ext4 /dev/volume/root
 mkswap /dev/volume/swap
