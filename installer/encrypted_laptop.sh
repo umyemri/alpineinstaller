@@ -45,7 +45,7 @@ cryptsetup -v -c serpent-xts-plain64 -s 512 --hash whirlpool --iter-time 5000 --
 cryptsetup luksOpen /dev/sda2 crypt
 pvcreate --dataalignment 1m /dev/mapper/crypt
 vgcreate volume /dev/mapper/crypt
-lvcreate -L $(swaps)GB volume -n swap 
+lvcreate -L ${swaps}GB volume -n swap 
 lvcreate -l 100%FREE volume -n root
 #modprobe dm_mod
 #modprobe dm_crypt
