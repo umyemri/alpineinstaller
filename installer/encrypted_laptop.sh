@@ -1,6 +1,8 @@
 #!/bin/sh
 #
 # install alpine on a laptop
+# 
+# runtime: 4 - 5 minutes
 #
 # usually the setup-alpine is enough to setup a basic partition system. but for
 # my purposes, i want an encrypted volume as a modicum of security. only for
