@@ -5,6 +5,9 @@
 # basic packages suite.
 # a lot of this is commented out. open up what you need
 
+# tools i like
+#apk add vim tmux
+
 # wireless & network tools
 # note on wireguard - this is only for basic security. they note that they are not quantum protected.
 #apk add wpa_supplicant wireless-tools wireguard-tools wireguard-tools-doc iptables iptables-doc ip6tables
