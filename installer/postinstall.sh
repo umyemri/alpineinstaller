@@ -2,48 +2,22 @@
 #
 # post install scripts
 #
-# this is only the most basic of setup. any configuration there after is on you.
-# this assumes you have a wifi.conf made for wpa_supplicant
+# basic packages suite.
+# a lot of this is commented out. open up what you need
 
-# user setup
-wpa_supplicant -i wlan0 -c wifi.conf -B
-udhcpcd -i wlan0
+# wireless & network tools
+# note on wireguard - this is only for basic security. they note that they are not quantum protected.
+#apk add wpa_supplicant wireless-tools wireguard-tools wireguard-tools-doc iptables iptables-doc ip6tables
 
-read -p 'user: ' uname
-read -sp 'pass: ' upass
-apk add dash
-adduser -a -G video,audio,wheel $uname -p $upass -s dash
-echo '$uname ALL=(ALL) NOPASSWD: ALL' >> ./$uname
-mv ./$uname /etc/sudoers.d/
-su $uname
-cd ~
+# disk handling & compression
+#apk add p7zip dosfstools exfat-utils ntfs-3g blkid lsblk
 
-# make basic folder structure - these are my preferences
-mkdir tl dl dx px vx ax mt .config
-mkdir px/walls
-wget https://unsplash.it/1920/1080?random -O ~/px/walls/wall.png
+# shells & sudo
+#apk add zsh zsh-doc zsh-autosuggestions zsh-syntax-highlighting zsh-syntax-highlighting-doc sudo sudo-doc
 
-# dwm setup from source
-sudo setup-xorg-base
-sudo apk add git make gcc g++ libx11-dev libxft-dev libxinerama-dev dbus-x11 firefox adwaita-gtk2-theme adwaita-icon-theme ttf-dejavu
-cd tl
-git clone https://git.suckless.org/dwm
-git clone https://git.suckless.org/dmenu
-git clone https://git.suckless.org/st
-git clone https://git.suckless.org/dwmstatus
-cd dwm
-sudo make clean install
-cd ../dmenu
-sudo make clean install
-cd ../st
-sudo make clean install
-echo "feh --bg-fill ~/px/walls/wall.png &" > ~/.xinitrc
-echo "exec dwm" >> ~/.xinitrc
-
-# install anything else you want at start up.
-sudo apk add ranger w3m feh sxiv p7zip dosfstools exfat-utils wireguard-tools ip6tables libxinerama xrandr python3 py3-pip
-
-# done
-echo 'post install complete.'
-echo 'this is a very basic setup. anything you might want to add is on you.'
-echo 'good luck!'
+# setting up a user
+#read -p 'user: ' uname
+#read -sp 'pass: ' upass
+#adduser -a -G video,audio,wheel $uname -p $upass -s zsh
+#echo '$uname ALL=(ALL) NOPASSWD: ALL' >> ./$uname
+#mv ./$uname /etc/sudoers.d/
