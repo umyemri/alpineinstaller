@@ -40,4 +40,5 @@ sudo apk add alsa-utils alsa-utils-doc alsa-lib alsaconf
 sudo rc-service alsa start
 sudo rc-update add alsa
 # later you might need to restart
-#alsactl restore
+#sudo alsactl restore
+#sudo alsactl init
