@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# userspace.h
+# userspace.sh
 # 
 # meant to run from a user with sudo wheel abilities.
 #
