@@ -17,9 +17,12 @@ wget https://unsplash.it/1920/1080?random -O ~/px/walls/wall.png
 echo "feh --bg-fill ~/px/walls/wall.png &" > ~/.xinitrc
 echo "exec dwm" >> ~/.xinitrc
 
+# some fonts - ttf-dejavu is needed for the dwm compile process below.
+sudo apk add ttf-dejavu terminus-font font-noto font-noto-cjk font-noto-cjk-extra font-noto-emoji
+
 # dwm setup from source
 sudo setup-xorg-base
-sudo apk add git make gcc g++ libx11-dev libxft-dev libxinerama-dev dbus-x11 firefox adwaita-gtk2-theme adwaita-icon-theme ttf-dejavu libxinerama xrandr
+sudo apk add git make gcc g++ libx11-dev libxft-dev libxinerama-dev dbus-x11 firefox adwaita-gtk2-theme adwaita-icon-theme libxinerama xrandr
 cd tl
 git clone https://git.suckless.org/dwm
 git clone https://git.suckless.org/dmenu
