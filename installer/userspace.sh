@@ -9,7 +9,7 @@
 # udhcpcd -i wlan0
 
 # install anything else you want at start up.
-sudo apk add ranger w3m feh sxiv python3 py3-pip neofetch
+sudo apk add ranger w3m feh sxiv python3 py3-pip neofetch newsboat
 
 mkdir tl dl dx px vx ax mt .config
 mkdir px/walls
@@ -31,3 +31,8 @@ cd ../dmenu
 sudo make clean install
 cd ../st
 sudo make clean install
+
+# audio
+sudo apk add alsa-utils alsa-utils-doc alsa-lib alsaconf
+sudo rc-service alsa start
+sudo rc-update add alsa
