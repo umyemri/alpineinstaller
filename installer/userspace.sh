@@ -1,9 +1,15 @@
 #!/bin/zsh
 #
 # userspace.h
+# 
+# meant to run from a user with sudo wheel abilities.
+#
 
 # wpa_supplicant -i wlan0 -c wifi.conf -B
 # udhcpcd -i wlan0
+
+# install anything else you want at start up.
+sudo apk add ranger w3m feh sxiv python3 py3-pip neofetch
 
 mkdir tl dl dx px vx ax mt .config
 mkdir px/walls
