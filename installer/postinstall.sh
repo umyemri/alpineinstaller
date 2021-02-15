@@ -19,8 +19,13 @@
 #apk add zsh zsh-doc zsh-autosuggestions zsh-syntax-highlighting zsh-syntax-highlighting-doc sudo sudo-doc
 
 # setting up a user
+# if you want to use the libuser package:
+#echo 'http://mirror.math.princeton.edu/pub/alpinelinux/edge/testing/' >> /etc/apk/repositories
+#apk update
+#apk add libuser
 #read -p 'user: ' uname
 #read -sp 'pass: ' upass
-#adduser -a -G video,audio,wheel $uname -p $upass -s zsh
-#echo '$uname ALL=(ALL) NOPASSWD: ALL' >> ./$uname
-#mv ./$uname /etc/sudoers.d/
+#adduser $uname -p $upass -s /bin/zsh
+# run visudo to add the proper passwd setting for wheel users.
+#visudo
+#addgroup $uname wheel
