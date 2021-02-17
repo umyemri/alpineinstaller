@@ -42,3 +42,32 @@ sudo rc-update add alsa
 # later you might need to restart
 #sudo alsactl restore
 #sudo alsactl init
+
+# some networking
+sudo cat > /etc/network/interfaces << EOF
+auto lo
+iface lo inet loopback 
+  
+iface eth0 inet dhcp
+iface eth0 inet6 dhcp
+
+iface wlan0 inet dhcp
+    pre-up wpa_supplicant -i wlan0 -c /etc/wpa_supplicant/wifi.conf -B
+    post-down wpa_cli terminate
+iface wlan0 inet6 dhcp
+    
+iface wg0 inet static
+    # replace with proper IP
+    address 10.0.2.1/24
+    pre-up ip link add wg0 type wireguard
+    pre-up wg setconf wg0 /etc/wireguard/server.conf
+    post-up sysctl --write net.ipv4.ip_forward=1
+    post-down sysctl --write net.ipv4.ip_forward=1
+iface wg0 inet6 static
+    # replace with proper IP
+    address fc00:23:5::1/64
+    # not ipv6?
+    post-up sysctl --write net.ipv4.conf.all.forwarding=1
+    post-down sysctl --write net.ipv4.conf.all.forwarding=0
+
+EOF
