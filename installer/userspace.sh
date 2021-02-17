@@ -60,10 +60,52 @@ iface wg0 inet static
     # replace with proper IP
     address 10.0.2.1/24
     pre-up ip link add wg0 type wireguard
-    pre-up wg setconf wg0 /etc/wireguard/server.conf
+    pre-up wg setconf wg0 /etc/wireguard/wg0.conf
     post-up sysctl --write net.ipv4.ip_forward=1
     post-down sysctl --write net.ipv4.ip_forward=1
 iface wg0 inet6 static
+    # replace with proper IP
+    address fc00:23:5::1/64
+    # not ipv6?
+    post-up sysctl --write net.ipv4.conf.all.forwarding=1
+    post-down sysctl --write net.ipv4.conf.all.forwarding=0
+    
+iface wg1 inet static
+    # replace with proper IP
+    address 10.0.2.1/24
+    pre-up ip link add wg1 type wireguard
+    pre-up wg setconf wg1 /etc/wireguard/wg1.conf
+    post-up sysctl --write net.ipv4.ip_forward=1
+    post-down sysctl --write net.ipv4.ip_forward=1
+iface wg1 inet6 static
+    # replace with proper IP
+    address fc00:23:5::1/64
+    # not ipv6?
+    post-up sysctl --write net.ipv4.conf.all.forwarding=1
+    post-down sysctl --write net.ipv4.conf.all.forwarding=0
+
+iface wg2 inet static
+    # replace with proper IP
+    address 10.0.2.1/24
+    pre-up ip link add wg2 type wireguard
+    pre-up wg setconf wg2 /etc/wireguard/wg2.conf
+    post-up sysctl --write net.ipv4.ip_forward=1
+    post-down sysctl --write net.ipv4.ip_forward=1
+iface wg2 inet6 static
+    # replace with proper IP
+    address fc00:23:5::1/64
+    # not ipv6?
+    post-up sysctl --write net.ipv4.conf.all.forwarding=1
+    post-down sysctl --write net.ipv4.conf.all.forwarding=0
+
+iface wg3 inet static
+    # replace with proper IP
+    address 10.0.2.1/24
+    pre-up ip link add wg3 type wireguard
+    pre-up wg setconf wg3 /etc/wireguard/wg3.conf
+    post-up sysctl --write net.ipv4.ip_forward=1
+    post-down sysctl --write net.ipv4.ip_forward=1
+iface wg3 inet6 static
     # replace with proper IP
     address fc00:23:5::1/64
     # not ipv6?
